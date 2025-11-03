@@ -41,6 +41,9 @@ const resources = {
       pages: {
         settings: 'Settings',
       },
+      profile: {
+
+      },
       settings: {
         language: 'Language',
         theme: 'Theme',
@@ -50,6 +53,11 @@ const resources = {
         editProfile: 'Edit profile',
         changePassword: 'Change password',
         logout: 'Logout',
+      },
+      tasks: {
+        active: 'Active',
+        done: 'Done',
+        empty: 'No tasks yet',
       },
     },
   },
@@ -91,6 +99,9 @@ const resources = {
       pages: {
         settings: 'Настройки',
       },
+      profile: {
+
+      },
       settings: {
         language: 'Язык',
         theme: 'Тема',
@@ -100,6 +111,11 @@ const resources = {
         editProfile: 'Редактировать профиль',
         changePassword: 'Сменить пароль',
         logout: 'Выйти',
+      },
+      tasks: {
+        active: 'Активные',
+        done: 'Завершенные',
+        empty: 'Задач пока нет',
       },
     },
   },

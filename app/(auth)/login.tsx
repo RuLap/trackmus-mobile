@@ -1,34 +1,49 @@
-import { View, Text, TextInput, Button } from "react-native";
-import { useState } from "react";
-import { router } from "expo-router";
+import { View, Text } from 'react-native'
+import { Theme, useTheme } from '@/src/app/providers/ThemeProvider'
+import { useTranslation } from 'react-i18next'
+import { useMemo } from 'react'
+import { router } from 'expo-router'
+import { Button } from '@/src/components/ui'
+import { LoginForm } from '@/src/features/auth/components/LoginForm'
+import { StyleSheet } from 'react-native'
 
-export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+export default function LoginPage() {
+  const { theme } = useTheme()
+  const { t } = useTranslation()
 
-  const onLogin = () => {
-    // TODO: добавить вызов API
-    console.log("Logging in:", email);
-    router.replace("/(app)/(tabs)/(tasks)");
-  };
+  const styles = useMemo(() => getStyles(theme), [theme])
 
   return (
-    <View style={{ flex: 1, padding: 20, justifyContent: "center" }}>
-      <Text style={{ fontSize: 22, marginBottom: 16 }}>Login</Text>
-      <TextInput
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        style={{ borderWidth: 1, marginBottom: 10, padding: 8 }}
+    <View style={styles.container}>
+      <Text style={styles.title}>{t('auth.loginTitle')}</Text>
+      <LoginForm />
+
+      <Button
+        variant="ghost"
+        title={t('auth.register')}
+        onPress={() => router.replace('/(auth)/register')}
+        style={styles.switchButton}
       />
-      <TextInput
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-        style={{ borderWidth: 1, marginBottom: 20, padding: 8 }}
-      />
-      <Button title="Login" onPress={onLogin} />
     </View>
-  );
+  )
 }
+
+const getStyles = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
+      padding: theme.spacing.l,
+      justifyContent: 'center',
+    },
+    title: {
+      fontFamily: theme.typography.header.fontFamily,
+      fontSize: theme.typography.header.fontSize,
+      color: theme.colors.text,
+      marginBottom: theme.spacing.xxl,
+      textAlign: 'center',
+    },
+    switchButton: {
+      marginTop: theme.spacing.xl,
+    },
+  })

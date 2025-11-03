@@ -1,17 +1,14 @@
 import { View, Text, ActivityIndicator } from "react-native";
 import { router } from "expo-router";
 import { Redirect } from 'expo-router';
-import { useAuth } from '@/src/features/auth/useAuth';
+import { useAuth } from '@/src/features/auth';
 import { Button } from "@/src/components/ui";
-import { LanguageSwitcher } from "@/src/components/ui/LanguageSwitcher";
-import { ThemeSwitcher } from "@/src/components/ui/ThemeSwitcher";
 import { useTheme } from "@/src/app/providers/ThemeProvider";
 import { useTranslation } from "react-i18next";
-import { GoogleIcon } from "@/src/components/ui/GoogleIcon";
 import { ChartColumnIncreasing, ClipboardClock, FileMusic, ListMusic } from "lucide-react-native";
 
 export default function Index() {
-  const { isAuthenticated, initializing } = useAuth();
+  const { isAuthenticated, isFullyAuthenticated, initializing } = useAuth();
   const { theme } = useTheme();
   const { t } = useTranslation();
 
@@ -22,16 +19,20 @@ export default function Index() {
           flex: 1,
           justifyContent: 'center',
           alignItems: 'center',
-          backgroundColor: 'white',
+          backgroundColor: theme.colors.background,
         }}
       >
-        <ActivityIndicator size="large" color="#007AFF" />
+        <ActivityIndicator size="large" color={theme.colors.background} />
       </View>
     );
   }
 
-  if (isAuthenticated) {
+  if (isFullyAuthenticated) {
     return <Redirect href="(app)/(tabs)/(tasks)" />;
+  }
+
+  if (isAuthenticated) {
+    return <Redirect href="(auth)/confirm-email" />;
   }
 
   return (
@@ -44,73 +45,70 @@ export default function Index() {
         backgroundColor: theme.colors.background,
       }}
     >
-      <View style={{position: 'absolute', top: 40, left: 40, flexDirection: 'row' }}>
-        <LanguageSwitcher />
-      </View>
-      <View style={{position: 'absolute', top: 40, right: 40, flexDirection: 'row' }}>
-        <ThemeSwitcher />
-      </View>
       <FileMusic color={theme.colors.secondary} size={128} />    
       <Text style={{
-          fontSize: theme.typography.title.fontSize,
-          fontWeight: theme.typography.title.fontWeight,
-          lineHeight: theme.typography.title.lineHeight,
+          fontFamily: theme.typography.header.fontFamily,
+          fontSize: theme.typography.header.fontSize,
+          lineHeight: theme.typography.header.lineHeight,
           color: theme.colors.secondary,
           marginLeft: theme.spacing.m,
           marginVertical: theme.spacing.xxl,
         }}>
-        Welcome to Trackmus!
+        {t('welcome.title')}
       </Text>
 
       <View style={{
+        width: '95%',
         flexDirection: 'row',
-        justifyContent: 'center',
         alignContent: 'center',
-        marginBottom: theme.spacing.xl,
+        justifyContent: 'center',
+        marginBottom: theme.spacing.xl,        
       }}>
         <ListMusic color={theme.colors.text} size={32} />
         <Text style={{
+          fontFamily: theme.typography.title.fontFamily,
           fontSize: theme.typography.title.fontSize,
-          fontWeight: theme.typography.title.fontWeight,
           lineHeight: theme.typography.title.lineHeight,
           color: theme.colors.text,
           marginLeft: theme.spacing.m
         }}>
-          Create Tasks
+          {t('welcome.createTasks')}
         </Text>
       </View>
       <View style={{
+        width: '95%',
         flexDirection: 'row',
-        justifyContent: 'center',
         alignContent: 'center',
+        justifyContent: 'center',
         marginBottom: theme.spacing.xl,
       }}>
         <ClipboardClock color={theme.colors.text} size={32} />
         <Text style={{
+          fontFamily: theme.typography.title.fontFamily,
           fontSize: theme.typography.title.fontSize,
-          fontWeight: theme.typography.title.fontWeight,
           lineHeight: theme.typography.title.lineHeight,
           color: theme.colors.text,
           marginLeft: theme.spacing.m
         }}>        
-          Record Sessions
+          {t('welcome.recordSessions')}
         </Text>
       </View>
       <View style={{
+        width: '95%',
         flexDirection: 'row',
-        justifyContent: 'center',
         alignContent: 'center',
+        justifyContent: 'center',
         marginBottom: theme.spacing.xxl,
       }}>
         <ChartColumnIncreasing color={theme.colors.text} size={32} />
         <Text style={{
+          fontFamily: theme.typography.title.fontFamily,
           fontSize: theme.typography.title.fontSize,
-          fontWeight: theme.typography.title.fontWeight,
           lineHeight: theme.typography.title.lineHeight,
           color: theme.colors.text,
           marginLeft: theme.spacing.m
         }}>        
-          Look Results
+          {t('welcome.lookResults')}
         </Text>
       </View>
       <Button
@@ -123,16 +121,6 @@ export default function Index() {
         title={t('auth.register')}
         onPress={() => router.push("/(auth)/register")}
         style={{marginBottom: theme.spacing.m, width: '90%'}} 
-      />
-      <Button
-        variant='outline'
-        title={t('auth.withGoogle')}
-        onPress={() => {
-          router.replace("/(app)/(tabs)/(tasks)");
-        }}
-        leftIcon={<GoogleIcon width={20} height={20} />}
-        style={{borderColor: theme.colors.text, borderRadius: 4, backgroundColor: theme.colors.googleBtn }} 
-        textStyle={{color:theme.colors.background}}
       />
     </View>
   );

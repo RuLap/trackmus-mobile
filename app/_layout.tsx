@@ -1,8 +1,8 @@
-import { Stack } from 'expo-router';
 import { useEffect } from 'react';
-import { StatusBar } from 'expo-status-bar';
 import { initI18n } from '@/src/lib/i18n';
-import ThemeProvider from '@/src/app/providers/ThemeProvider';
+import ThemeProvider, { ThemedLayout } from '@/src/app/providers/ThemeProvider';
+import Toast from 'react-native-toast-message';
+import { toastConfig } from '@/src/components/ui';
 
 export default function RootLayout() {
   useEffect(() => {
@@ -11,12 +11,8 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider>
-      <StatusBar style="auto" />
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="index" />
-        <Stack.Screen name="(auth)" />
-        <Stack.Screen name="(app)" />
-      </Stack>
+      <ThemedLayout />
+      <Toast config={toastConfig} />
     </ThemeProvider>
   );
 }

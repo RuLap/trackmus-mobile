@@ -1,7 +1,7 @@
 import { useTheme } from "@/src/app/providers/ThemeProvider";
 import { Stack } from "expo-router";
 
-export default function AuthLayout() {
+export default function WelcomeLayout() {
   const { theme } = useTheme();
   
   return (
@@ -22,16 +22,8 @@ export default function AuthLayout() {
           title: '',
           headerBackButtonDisplayMode: "default",
         }}
-        name="login"
+        name="index"
       />
-      <Stack.Screen
-        options={{
-          title: '',
-          headerBackButtonDisplayMode: "default",
-        }}
-        name="register"
-      />
-      <Stack.Screen name="confirm-email" />
     </Stack>
   );
 }

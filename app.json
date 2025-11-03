@@ -1,12 +1,13 @@
 {
   "expo": {
-    "name": "trackmus-mobile",
-    "slug": "trackmus-mobile",
+    "name": "Trackmus",
+    "slug": "trackmus",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+    "assetBundlePatterns": ["**/*"],
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
@@ -22,7 +23,7 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.anonymous.trackmusmobile"
+      "package": "com.anonymous.trackmus"
     },
     "web": {
       "favicon": "./assets/favicon.png"

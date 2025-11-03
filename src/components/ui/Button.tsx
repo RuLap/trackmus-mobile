@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { 
   Pressable, 
   Text, 
@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
   View
 } from 'react-native';
-import { useTheme } from '@src/app/providers/ThemeProvider';
+import { Theme, useTheme } from '@src/app/providers/ThemeProvider';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost';
 export type ButtonSize = 'sm' | 'md' | 'lg';
@@ -39,6 +39,8 @@ export const Button: React.FC<ButtonProps> = ({
   textStyle,
 }) => {
   const { theme } = useTheme();
+
+  const styles = useMemo(() => getStyles(theme), [theme])
 
   const getBackgroundColor = () => {
     if (disabled) return theme.colors.border;
@@ -139,11 +141,13 @@ export const Button: React.FC<ButtonProps> = ({
           )}
           
           <Text style={[
+
             styles.text,
             {
-              color: getTextColor(),
-              fontSize: getFontSize(),
-              fontWeight: '600',
+              fontFamily: theme.typography.button.fontFamily,
+              fontSize: theme.typography.button.fontSize,
+              lineHeight: theme.typography.button.lineHeight,
+              color: theme.colors.text,
             },
             textStyle,
           ]}>
@@ -161,9 +165,9 @@ export const Button: React.FC<ButtonProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = (theme: Theme) => StyleSheet.create({
   button: {
-    borderRadius: 16,
+    borderRadius: theme.borderRadius.large,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
